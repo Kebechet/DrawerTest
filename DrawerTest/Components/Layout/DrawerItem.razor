@@ -1,0 +1,41 @@
+@inject NavigationManager _navigationManager
+
+@if (IsVisible)
+{
+    <li class="flex items-center py-3 px-1 border-b font-m-up font-semibold cursor-pointer"
+        @onclick="OnItemClick"
+    >
+        <span>@Text</span>
+    </li>
+}
+
+@code {
+    [Parameter, EditorRequired] public required string Text { get; set; }
+    [Parameter] public EventCallback OnClick { get; set; }
+    [Parameter] public string? NavigateToPath { get; set; }
+    [Parameter] public bool IsVisible { get; set; } = true;
+    [Parameter] public bool IsIndicatorVisible { get; set; } = false;
+
+    [CascadingParameter]
+    public Action? HideSidebar { get; set; }
+
+    private async Task OnItemClick()
+    {
+        if (!IsVisible)
+        {
+            return;
+        }
+
+        HideSidebar?.Invoke();
+
+        if (!string.IsNullOrEmpty(NavigateToPath))
+        {
+            _navigationManager.NavigateTo(NavigateToPath!);
+        }
+
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync();
+        }
+    }
+}

@@ -1,0 +1,45 @@
+@using Microsoft.AspNetCore.Components
+@using System.Diagnostics
+
+<div class="fixed flex flex-col top-0 left-0 z-[2100] w-64 h-full rounded-r-lg transition-all duration-300 transform -translate-x-full bg-white shadow-lg
+    @((IsSidebarVisible)? " translate-x-0" : " pointer-events-none")"
+>
+    <header class="flex-0 flex-c h-40 p-3 rounded-tr-lg border-b bg-cover bg-center"
+                style="background-image:url(/img/left_navbar_bg.jpg)" >
+            @DrawerHeader
+    </header>
+
+    <ul class="flex-1 scrollbar-y-invisible">
+        <CascadingValue Value="HideSidebar" IsFixed=true>
+                @DrawerContent
+        </CascadingValue>
+    </ul>
+
+    <footer class="flex-0 flex flex-col justify-end p-3">
+            @DrawerFooter
+     </footer>
+</div>
+
+<section @onclick="HideSidebar" class="fixed z-[2000] top-0 left-0 w-full h-full bg-black backdrop-blur opacity-80 transition-colors backdrop-filter backdrop-blur duration-300
+        @((IsSidebarVisible) ? " visible pointer-events-all" : "invisible pointer-events-none")">
+</section>
+
+@code {
+    [Parameter] public bool IsSidebarVisible { get; set; }
+    [Parameter] public EventCallback<bool> IsSidebarVisibleChanged { get; set; }
+    [Parameter] public RenderFragment? DrawerHeader { get; set; }
+    [Parameter] public RenderFragment? DrawerContent { get; set; }
+    [Parameter] public RenderFragment? DrawerFooter { get; set; }
+
+    public async Task ShowSidebar()
+    {
+        IsSidebarVisible = true;
+        await IsSidebarVisibleChanged.InvokeAsync(IsSidebarVisible);
+    }
+
+    public void HideSidebar()
+    {
+        IsSidebarVisible = false;
+        IsSidebarVisibleChanged.InvokeAsync(IsSidebarVisible);
+    }
+}

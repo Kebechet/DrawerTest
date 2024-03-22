@@ -1,3 +1,47 @@
 ﻿@page "/"
+@using DrawerTest.Components.Layout
 
+<div class="flex-c">
+    <button class="bg-red-500 w-64 h-40" @onclick="()=> _isSidebarVisible = !_isSidebarVisible">Toggle Sidebar</button>
+</div>
 
+<Drawer @bind-IsSidebarVisible="_isSidebarVisible">
+    <DrawerHeader>
+        <img async class="max-h-full" src="./img/logo_text.svg" alt="SatisFIT">
+    </DrawerHeader>
+
+    <DrawerContent>
+        <DrawerItem Text="Profile" NavigateToPath="profile"/>
+        <DrawerItem Text="MeasurementTitle" NavigateToPath="measurements"/>
+        <DrawerItem Text="ContactDevelopers"  NavigateToPath="support" />
+        <DrawerItem Text="Changelog"  NavigateToPath="changelog" />
+        <DrawerItem Text="Training plan management" />
+        <DrawerItem Text="Settings"  NavigateToPath="settings" />
+        <DrawerItem Text="Logout" />
+    </DrawerContent>
+    <DrawerFooter>
+        <div>
+            <ul class="flex items-center justify-center py-3">
+                <a @onshortclick="()=> _navigationManager.NavigateTo(_stateContainer.SocialMedia.FacebookProfileLink!)">
+                    <img async class="px-1 cursor-pointer" height="40" width="40" src="./img/facebook.svg" alt="Facebook">
+                </a>
+                <a @onshortclick="()=> _navigationManager.NavigateTo(_stateContainer.SocialMedia.InstagramProfileLink!)">
+                    <img async class="px-1 cursor-pointer" height="40" width="40" src="./img/instagram.svg" alt="Instagram">
+                </a>
+            </ul>
+
+            <a href="https://satis.fit/terms-of-service" class="block text-center font-s-up pb-2 underline">
+                TermsOfService
+            </a>
+
+            <a href="https://satis.fit/policy" class="block text-center font-s-up pb-2 underline">
+                PrivacyPolicy
+            </a>
+            <span class="block text-center font-xs-up">@($"v1.2.3 Build #35")</span>
+        </div>
+    </DrawerFooter>
+</Drawer>
+
+@code{
+    private bool _isSidebarVisible { get; set; }
+}
