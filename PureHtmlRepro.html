@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>DrawerTest</title>
+    <link rel="stylesheet" href="DrawerTest/wwwroot/css/components-tailwind.css" />
+
+    <script language="javascript">
+        var IsSidebarVisible = false;
+
+        function HideSidebar() 
+        {
+            IsSidebarVisible = false;
+
+            document.getElementById("cover").classList.remove("visible", "pointer-events-all");
+            document.getElementById("cover").classList.add("invisible", "pointer-events-none");
+
+
+            document.getElementById("drawer").classList.remove("translate-x-0");
+            document.getElementById("drawer").classList.add("pointer-events-none");
+        }
+
+        function ShowSidebar() 
+        {
+            IsSidebarVisible = true;
+            document.getElementById("cover").classList.remove("invisible", "pointer-events-none");
+            document.getElementById("cover").classList.add("visible", "pointer-events-all");
+
+            document.getElementById("drawer").classList.remove("pointer-events-none");
+            document.getElementById("drawer").classList.add("translate-x-0");
+        }
+
+        function ToggleSideBar() 
+        {
+            if(IsSidebarVisible)
+            {
+                HideSidebar();
+            }
+            else
+            {
+                ShowSidebar();
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="flex-c">
+        <button class="bg-red-500 w-64 h-40" onclick="ToggleSideBar();" >Toggle Sidebar</button>
+    </div>
+
+    <div id="drawer" 
+        class="fixed flex flex-col top-0 left-0 z-[2100] w-64 h-full rounded-r-lg transition-all duration-300 transform -translate-x-full bg-white shadow-lg"
+    >
+    <header class="flex-0 flex-c h-40 p-3 rounded-tr-lg border-b bg-cover bg-center">
+        <img async class="max-h-full" src="DrawerTest/wwwroot/img/logo_text.svg" alt="SatisFIT">
+    </header>
+
+    <ul id="drawer-items" class="flex-1 scrollbar-y-invisible">
+        <li class="flex items-center py-3 px-1 border-b font-m-up font-semibold cursor-pointer">
+            <span>Profile</span>
+        </li>
+        <li class="flex items-center py-3 px-1 border-b font-m-up font-semibold cursor-pointer">
+            <span>MeasurementTitle</span>
+        </li>
+        <li class="flex items-center py-3 px-1 border-b font-m-up font-semibold cursor-pointer">
+            <span>ContactDevelopers</span>
+        </li>
+        <li class="flex items-center py-3 px-1 border-b font-m-up font-semibold cursor-pointer">
+            <span>Changelog</span>
+        </li>
+        <li class="flex items-center py-3 px-1 border-b font-m-up font-semibold cursor-pointer">
+            <span>Training plan management</span>
+        </li>
+        <li class="flex items-center py-3 px-1 border-b font-m-up font-semibold cursor-pointer">
+            <span>Settings</span>
+        </li>
+        <li class="flex items-center py-3 px-1 border-b font-m-up font-semibold cursor-pointer">
+            <span>Logout</span>
+        </li>
+    </ul>
+
+    <footer class="flex-0 flex flex-col justify-end p-3">
+        <div>
+            <ul class="flex items-center justify-center py-3">
+                <a>
+                    <img async class="px-1 cursor-pointer" height="40" width="40" src="DrawerTest/wwwroot/img/facebook.svg" alt="Facebook">
+                </a>
+                <a>
+                    <img async class="px-1 cursor-pointer" height="40" width="40" src="DrawerTest/wwwroot/img/instagram.svg" alt="Instagram">
+                </a>
+            </ul>
+        
+            <a href="https://satis.fit/terms-of-service" class="block text-center font-s-up pb-2 underline">
+                TermsOfService
+            </a>
+        
+            <a href="https://satis.fit/policy" class="block text-center font-s-up pb-2 underline">
+                PrivacyPolicy
+            </a>
+            <span class="block text-center font-xs-up">v1.2.3 Build #35</span>
+        </div>
+    </footer>
+    </div>
+
+    <section id="cover" onclick="HideSidebar();" class="fixed z-[2000] top-0 left-0 w-full h-full bg-black backdrop-blur opacity-80 transition-colors backdrop-filter backdrop-blur duration-300 
+    invisible pointer-events-none">
+    </section>
+</body>
+
+</html>
